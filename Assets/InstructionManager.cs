@@ -24,12 +24,18 @@ public class InstructionManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		StartCoroutine("SendInstruction");
+		NewInstructions();
+		StartCoroutine("NewInstructionsRepeat");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+	}
+
+	public void NewInstructions(string lastTaskOutcome = "won") {
+		CreateInstructions();
+		speaker.GetComponent<Speaker>().sayIntro(instructions, lastTaskOutcome);
 	}
 
 	private void CreateInstructions() {
@@ -38,18 +44,13 @@ public class InstructionManager : MonoBehaviour {
 		instructions[2] = Random.Range(0, NOUN_COUNT);
 	}
 
-	private void SendToSpeaker() {
-		speaker.GetComponent<Speaker>().sayInstruction(instructions);
-	}
-
-	public void NewInstructions() {
-		CreateInstructions();
-		SendToSpeaker();
-	}
-
-	private IEnumerator SendInstruction() { // DELETE LATER
+	private IEnumerator NewInstructionsRepeat() { // DELETE LATER
 		while (true) {
-			NewInstructions();
+			if (Random.Range(0, 1f) < 0.5f) {
+				GetComponent<GameManager>().FailedTask();
+			} else {
+				GetComponent<GameManager>().FailedTask();
+			}
 			yield return new WaitForSeconds(10);
 		}
 	}
