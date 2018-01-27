@@ -10,7 +10,7 @@ using UnityEngine;
  *Red = ting-ern, Green = lend-ern, Yellow = wolt-ern, Blue = zun-ern,
  *
  *OBJECTS - Have MIK in the middle
- *Lever = gren-mik-to, Button = Com-mik-do, Dial = pring-mik-ha, Throttle = ad-mik-mi
+ *Lever = gren-mik-to, Button = Com-mik-do, Dial = pring-mik-ha, Slider = ad-mik-mi
  */
 
 public class InstructionManager : MonoBehaviour {
@@ -20,7 +20,7 @@ public class InstructionManager : MonoBehaviour {
 
 	private string[] verbs = new string[]{"slide", "pull", "rotate", "push"}; // Delete
 	private string[] adjectives = new string[]{"red", "green", "yellow", "blue"};
-	private string[] nouns = new string[]{"lever", "button", "dial", "throttle"}; // Later
+	private string[] nouns = new string[]{"lever", "button", "dial", "slider"}; // Later
 
 	public GameObject speaker;
 
@@ -45,7 +45,16 @@ public class InstructionManager : MonoBehaviour {
 	private void CreateInstructions() {
 		instructions[0] = Random.Range(0, VERB_COUNT);
 		instructions[1] = Random.Range(0, ADJECTIVE_COUNT);
-		instructions[2] = Random.Range(0, NOUN_COUNT);
+
+		if (instructions[0] == 0) {
+			instructions[2] = 3;
+		} else if (instructions[0] == 1) {
+			instructions[2] = 0;
+		} else if (instructions[0] == 2) {
+			instructions[2] = 2;
+		} else if (instructions[0] == 3) {
+			instructions[2] = Random.Range(0, 1);
+		}
 	}
 
 	private IEnumerator NewInstructionsRepeat() { // DELETE LATER
@@ -56,10 +65,9 @@ public class InstructionManager : MonoBehaviour {
 			+ nouns[GetComponent<InstructionManager>().instructions[2]]);
 			} else {
 				GetComponent<GameManager>().UsedItem(verbs[GetComponent<InstructionManager>().instructions[0]]
-			+ adjectives[GetComponent<InstructionManager>().instructions[1]]
-			+ nouns[GetComponent<InstructionManager>().instructions[2]]);
+			+ adjectives[GetComponent<InstructionManager>().instructions[1]]);
 			}
-			yield return new WaitForSeconds(10);
+			yield return new WaitForSeconds(5);
 		}
 	}
 }
