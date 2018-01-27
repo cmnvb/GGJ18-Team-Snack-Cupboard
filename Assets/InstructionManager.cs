@@ -18,9 +18,13 @@ public class InstructionManager : MonoBehaviour {
 	private const int ADJECTIVE_COUNT = 4;
 	private const int NOUN_COUNT = 4;
 
+	private string[] verbs = new string[]{"slide", "pull", "rotate", "push"}; // Delete
+	private string[] adjectives = new string[]{"red", "green", "yellow", "blue"};
+	private string[] nouns = new string[]{"lever", "button", "dial", "throttle"}; // Later
+
 	public GameObject speaker;
 
-	private int[] instructions = new int[3]; //verb, adjective, noun
+	public int[] instructions = new int[3]; //verb, adjective, noun
 
 	// Use this for initialization
 	void Start () {
@@ -47,9 +51,13 @@ public class InstructionManager : MonoBehaviour {
 	private IEnumerator NewInstructionsRepeat() { // DELETE LATER
 		while (true) {
 			if (Random.Range(0, 1f) < 0.5f) {
-				GetComponent<GameManager>().FailedTask();
+				GetComponent<GameManager>().UsedItem(verbs[GetComponent<InstructionManager>().instructions[0]]
+			+ adjectives[GetComponent<InstructionManager>().instructions[1]]
+			+ nouns[GetComponent<InstructionManager>().instructions[2]]);
 			} else {
-				GetComponent<GameManager>().FailedTask();
+				GetComponent<GameManager>().UsedItem(verbs[GetComponent<InstructionManager>().instructions[0]]
+			+ adjectives[GetComponent<InstructionManager>().instructions[1]]
+			+ nouns[GetComponent<InstructionManager>().instructions[2]]);
 			}
 			yield return new WaitForSeconds(10);
 		}

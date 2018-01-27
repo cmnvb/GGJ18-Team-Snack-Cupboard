@@ -5,8 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 	private int currentTask;
 	private int fails;
-
 	private int secondsLeft;
+
+	private string[] verbs = new string[]{"slide", "pull", "rotate", "push"};
+	private string[] adjectives = new string[]{"red", "green", "yellow", "blue"};
+	private string[] nouns = new string[]{"lever", "button", "dial", "throttle"};
 
 	// Use this for initialization
 	void Start () {
@@ -18,20 +21,22 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
-	public void WonTask() {
+	public void UsedItem(string itemUsed) {
 		currentTask++;
-		GetComponent<InstructionManager>().NewInstructions("won");
-	}
+		if (itemUsed.ToLower() == verbs[GetComponent<InstructionManager>().instructions[0]]
+			+ adjectives[GetComponent<InstructionManager>().instructions[1]]
+			+ nouns[GetComponent<InstructionManager>().instructions[2]]) {
+			GetComponent<InstructionManager>().NewInstructions("won");
+			StopCoroutine("CountDownTimer");
+		} else {
+			fails++;
 
-	public void FailedTask() {
-		currentTask++;
-		fails++;
+			if (fails >= 3) {
+				Debug.Log("YOU LOSE");
+			}
 
-		if (fails >= 3) {
-			Debug.Log("YOU LOSE");
+			GetComponent<InstructionManager>().NewInstructions("failed");
 		}
-
-		GetComponent<InstructionManager>().NewInstructions("failed");
 	}
 
 	public int GetCurrentTask() {
@@ -48,10 +53,6 @@ public class GameManager : MonoBehaviour {
 
 	public void StartCountDown() {
 		StartCoroutine("CountDownTimer");
-	}
-
-	public void StopCountDown() {
-		StopCoroutine("CountDownTimer");
 	}
 
 	private IEnumerator CountDownTimer() {

@@ -43,13 +43,13 @@ public class Speaker : MonoBehaviour {
 		yield return new WaitForSeconds(speaker.clip.length);
 		speaker.clip = verbs[instructions[0]];
 		speaker.Play();
-		managerCollection.GetComponent<GameManager>().StartCountDown();
 		yield return new WaitForSeconds(verbs[instructions[0]].length);
 		speaker.clip = adjectives[instructions[1]];
 		speaker.Play();
 		yield return new WaitForSeconds(adjectives[instructions[1]].length);
 		speaker.clip = nouns[instructions[2]];
 		speaker.Play();
+		managerCollection.GetComponent<GameManager>().StartCountDown();
 		UpdateConsole();
 	}
 }
