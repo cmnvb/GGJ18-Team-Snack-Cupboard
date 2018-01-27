@@ -24,12 +24,21 @@ public class InstructionManager : MonoBehaviour {
 
 	public GameObject speaker;
 
-	public int[] instructions = new int[3]; //verb, adjective, noun
+	private int[] instructions = new int[3]; //verb, adjective, noun
+
+    /// <summary>
+    /// property accessor for instructions array
+    /// </summary>
+    public int[] Instructions {
+        get
+        {
+            return instructions;
+        }
+    }
 
 	// Use this for initialization
 	void Start () {
 		NewInstructions();
-		StartCoroutine("NewInstructionsRepeat");
 	}
 	
 	// Update is called once per frame
@@ -54,20 +63,6 @@ public class InstructionManager : MonoBehaviour {
 			instructions[2] = 2;
 		} else if (instructions[0] == 3) {
 			instructions[2] = Random.Range(0, 1);
-		}
-	}
-
-	private IEnumerator NewInstructionsRepeat() { // DELETE LATER
-		while (true) {
-			if (Random.Range(0, 1f) < 0.5f) {
-				GetComponent<GameManager>().UsedItem(verbs[GetComponent<InstructionManager>().instructions[0]]
-			+ adjectives[GetComponent<InstructionManager>().instructions[1]]
-			+ nouns[GetComponent<InstructionManager>().instructions[2]]);
-			} else {
-				GetComponent<GameManager>().UsedItem(verbs[GetComponent<InstructionManager>().instructions[0]]
-			+ adjectives[GetComponent<InstructionManager>().instructions[1]]);
-			}
-			yield return new WaitForSeconds(5);
 		}
 	}
 }
