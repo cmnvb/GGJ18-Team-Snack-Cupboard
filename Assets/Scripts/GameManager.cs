@@ -89,17 +89,14 @@ public class GameManager : MonoBehaviour {
 		GameObject.FindGameObjectsWithTag("Alarm1")[0].GetComponent<AudioSource>().Stop();
 	}
 
-	private void StartGas() { // NO TIMER FOR GAS
+	private void StartGas() {
+		GameObject.FindGameObjectsWithTag("GasMaskSpawner")[0].GetComponent<GasMaskSpawner>().SpawnGasMask();
 		StartCoroutine("GasTimer");
 		GameObject[] gasParticles = GameObject.FindGameObjectsWithTag("GasEffect");
 		foreach (GameObject particle in gasParticles) {
 			particle.GetComponent<ParticleSystem>().Play();
 		}
 		GameObject.FindGameObjectsWithTag("Alarm1")[0].GetComponent<AudioSource>().Play();
-	}
-
-	private void Fire() {
-
 	}
 
 	private IEnumerator CountDownTimer() {
@@ -120,10 +117,27 @@ public class GameManager : MonoBehaviour {
 			GameObject.FindGameObjectsWithTag("Alarm2")[0].GetComponent<AudioSource>().Play();
 		} else if (fails >= FAIL_LIMIT) {
 			GameObject.FindGameObjectsWithTag("Alarm3")[0].GetComponent<AudioSource>().Play();
+
+			GameObject[] explosions = GameObject.FindGameObjectsWithTag("ExplosionEffect");
+			foreach (GameObject explosion in explosions) {
+				yield return new WaitForSeconds(Random.Range(0.05f, 0.1f));
+				explosion.GetComponent<ParticleSystem>().Play();
+			}
+			GameObject[] sparks = GameObject.FindGameObjectsWithTag("SparkEffect");
+			foreach (GameObject spark in sparks) {
+				yield return new WaitForSeconds(Random.Range(0.01f, 0.02f));
+				spark.GetComponent<ParticleSystem>().Play();
+			}
+			GameObject[] fires = GameObject.FindGameObjectsWithTag("FireEffect");
+			foreach (GameObject fire in fires) {
+				yield return new WaitForSeconds(Random.Range(0.01f, 0.05f));
+				fire.GetComponent<ParticleSystem>().Play();
+			}
+
 			yield return new WaitForSeconds(7);
 			GameObject.FindGameObjectsWithTag("Alarm2")[0].GetComponent<AudioSource>().Stop();
 			GameObject.FindGameObjectsWithTag("Alarm3")[0].GetComponent<AudioSource>().Stop();
-			//SceneManager.LoadScene("MainMenu");
+			SceneManager.LoadScene("MainMenu");
 		}
 	}
 

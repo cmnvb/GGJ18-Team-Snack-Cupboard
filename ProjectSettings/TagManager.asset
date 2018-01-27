@@ -11,6 +11,9 @@ TagManager:
   - Alarm1
   - Alarm2
   - Alarm3
+  - ExplosionEffect
+  - SparkEffect
+  - FireEffect
   layers:
   - Default
   - TransparentFX
