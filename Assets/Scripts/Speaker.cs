@@ -11,22 +11,22 @@ public class Speaker : MonoBehaviour {
 	public AudioClip[] adjectives = new AudioClip[4];
 	public AudioClip[] nouns = new AudioClip[4];
 
-    InstructionManager IMngr;
-    GameManager GM;
+	InstructionManager IMngr;
+	GameManager GM;
 	private int[] instructions;
 	private AudioSource speaker;
 
-    // Use this for initialization
-    void Awake() {
+	// Use this for initialization
+	void Awake() {
 		speaker = GetComponent<AudioSource>();
-        IMngr = managerCollection.GetComponent<InstructionManager>();
-        GM = managerCollection.GetComponent<GameManager>();
-    }
+		IMngr = managerCollection.GetComponent<InstructionManager>();
+		GM = managerCollection.GetComponent<GameManager>();
+	}
 
-    void Start()
-    {
+	void Start()
+	{
 
-    }
+	}
 	
 	// Update is called once per frame
 	void Update() {
@@ -35,12 +35,16 @@ public class Speaker : MonoBehaviour {
 
 	public void sayIntro(string lastTaskOutcome) {
 		if (lastTaskOutcome != "failed") {
-			speaker.clip = intros[GM.GetCurrentTask()];
+			speaker.clip = intros[GM.GetCurrentTask() - 1];
 		} else {
-			speaker.clip = failIntros[GM.GetFails()];
+			speaker.clip = failIntros[GM.GetFails() - 1];
 		}
+
 		speaker.Play();
-		StartCoroutine("AfterIntro");
+
+		if (GM.GetFails()  - 1 < 2) { // MAGIC NUMBER
+			StartCoroutine("AfterIntro");
+		}
 	}
 
 	private void UpdateConsole() {

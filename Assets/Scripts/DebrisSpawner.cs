@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DebrisSpawner : MonoBehaviour {
-	public GameObject[] debris;
+	public GameObject[] debris = new GameObject[4];
 
 	// Use this for initialization
 	void Start () {

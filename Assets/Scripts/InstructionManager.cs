@@ -18,9 +18,9 @@ public class InstructionManager : MonoBehaviour {
 	private const int ADJECTIVE_COUNT = 4;
 	private const int NOUN_COUNT = 4;
 
-    public Actions.Verbs verb;
-    public Actions.Colour colour;
-    public Actions.Interactable interactable;
+	public Actions.Verbs verb;
+	public Actions.Colour colour;
+	public Actions.Interactable interactable;
 
 	public GameObject speaker;
 
@@ -40,12 +40,12 @@ public class InstructionManager : MonoBehaviour {
 	}
 
 	private void CreateInstructions() {
-        verb = (Actions.Verbs)Random.Range(0,3);
-        colour = (Actions.Colour)Random.Range(0, 3);
-        interactable = (Actions.Interactable)Random.Range(0, 3);
+		verb = (Actions.Verbs)Random.Range(0,3);
+		colour = (Actions.Colour)Random.Range(0, 3);
+		interactable = (Actions.Interactable)Random.Range(0, 3);
 
-        //verb = Actions.Verbs.PULL;
-        //interactable = Actions.Interactable.LEVER;
-        //colour = Actions.Colour.RED;
-    }
+		//verb = Actions.Verbs.PULL;
+		//interactable = Actions.Interactable.LEVER;
+		//colour = Actions.Colour.RED;
+	}
 }
