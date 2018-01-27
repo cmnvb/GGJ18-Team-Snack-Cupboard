@@ -42,7 +42,7 @@ Material:
     - _HitSize: 0.2
     - _HitTime: 0
     - _IntersectIntensity: 0
-    - _Opacity: 0.01
+    - _Opacity: 0.248
     - _ShieldAnimSpeed: 5.2
     - _ShieldDistortion: 0.006
     - _ShieldPatternPower: 37.4
