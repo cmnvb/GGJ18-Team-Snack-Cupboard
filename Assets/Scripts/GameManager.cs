@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour {
 			yield return new WaitForSeconds(7);
 			GameObject.FindGameObjectsWithTag("Alarm2")[0].GetComponent<AudioSource>().Stop();
 			GameObject.FindGameObjectsWithTag("Alarm3")[0].GetComponent<AudioSource>().Stop();
-			SceneManager.LoadScene("MainMenu");
+			//SceneManager.LoadScene("MainMenu");
 		}
 	}
 

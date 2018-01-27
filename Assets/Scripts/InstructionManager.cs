@@ -42,10 +42,12 @@ public class InstructionManager : MonoBehaviour {
 	private void CreateInstructions() {
 		verb = (Actions.Verbs)Random.Range(0,3);
 		colour = (Actions.Colour)Random.Range(0, 3);
-		interactable = (Actions.Interactable)Random.Range(0, 3);
 
-		//verb = Actions.Verbs.PULL;
-		//interactable = Actions.Interactable.LEVER;
-		//colour = Actions.Colour.RED;
+        // Choose the interaction based on the verb
+        interactable = verb == Actions.Verbs.ROTATE ? Actions.Interactable.DIAL : verb == Actions.Verbs.SLIDE ?
+            Actions.Interactable.SLIDER : verb == Actions.Verbs.PULL ? Actions.Interactable.LEVER :
+                Random.Range(0, 1) == 0 ? Actions.Interactable.BUTTON : Actions.Interactable.LEVER;
+        Debug.Log(verb.ToString() + ", " + interactable.ToString());
+
 	}
 }

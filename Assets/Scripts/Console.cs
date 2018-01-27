@@ -7,10 +7,12 @@ public class Console : MonoBehaviour {
 	private GameObject adjective;
 	private GameObject noun;
 
-	public Sprite[] symbols = new Sprite[4];
+	public Sprite[] verbs = new Sprite[4];
+    public Sprite[] adjectives = new Sprite[4];
+    public Sprite[] nouns = new Sprite[4];
 
-	// Use this for initialization
-	void Awake() {
+    // Use this for initialization
+    void Awake() {
 		verb = transform.GetChild(0).gameObject;
 		adjective = transform.GetChild(1).gameObject;
 		noun = transform.GetChild(2).gameObject;
@@ -22,8 +24,8 @@ public class Console : MonoBehaviour {
 	}
 
 	public void printInstruction(Actions.Verbs _verb, Actions.Colour _colour, Actions.Interactable _interactable) {
-		verb.GetComponent<SpriteRenderer>().sprite = symbols[(int)_verb];
-		adjective.GetComponent<SpriteRenderer>().sprite = symbols[(int)_colour];
-		noun.GetComponent<SpriteRenderer>().sprite = symbols[(int)_interactable];
+		verb.GetComponent<SpriteRenderer>().sprite = verbs[(int)_verb];
+		adjective.GetComponent<SpriteRenderer>().sprite = adjectives[(int)_colour];
+		noun.GetComponent<SpriteRenderer>().sprite = nouns[(int)_interactable];
 	}
 }
