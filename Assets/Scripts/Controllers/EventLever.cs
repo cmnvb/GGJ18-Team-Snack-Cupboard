@@ -9,6 +9,8 @@ public class EventLever : MonoBehaviour {
     private GameManager GM;
     public float pullTriggerAngle = 50f, pushTriggerAngle = -50f;
     public Actions.Colour colour;
+    private float timer = 1.5f;
+    bool canSend = true;
 
 	// Use this for initialization
 	void Start () {
@@ -24,8 +26,19 @@ public class EventLever : MonoBehaviour {
     /// <param name="e"> Event. In this case onValueChange </param>
     private void LeverMove(object sender, VRTK.Control3DEventArgs e)
     {
-        if (e.value < pushTriggerAngle) GM.UsedItem(Actions.Verbs.PUSH, colour, Actions.Interactable.LEVER);
-        if (e.value > pullTriggerAngle) GM.UsedItem(Actions.Verbs.PULL, colour, Actions.Interactable.LEVER);
+        if (canSend)
+        {
+            if (e.value < pushTriggerAngle) { GM.UsedItem(Actions.Verbs.PUSH, colour, Actions.Interactable.LEVER); StartCoroutine("Timer"); }
+            if (e.value > pullTriggerAngle) { GM.UsedItem(Actions.Verbs.PULL, colour, Actions.Interactable.LEVER); StartCoroutine("Timer"); }
+
+            }
+    }
+
+    IEnumerator Timer()
+    {
+        canSend = false;
+        yield return timer;
+        canSend = true;
     }
 
 }

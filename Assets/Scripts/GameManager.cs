@@ -79,6 +79,26 @@ public class GameManager : MonoBehaviour {
 		StartCoroutine("CountDownTimer");
 	}
 
+	public void StopGas() {
+		StopCoroutine("GasTimer");
+		GameObject[] gasParticles = GameObject.FindGameObjectsWithTag("GasParticle");
+		foreach (GameObject particle in gasParticles) {
+			particle.GetComponent<ParticleSystem>().Stop();
+		}
+	}
+
+	private void StartGas() {
+		StartCoroutine("GasTimer");
+		GameObject[] gasParticles = GameObject.FindGameObjectsWithTag("GasParticle");
+		foreach (GameObject particle in gasParticles) {
+			particle.GetComponent<ParticleSystem>().Play();
+		}
+	}
+
+	private void Fire() {
+
+	}
+
 	private IEnumerator CountDownTimer() {
 		secondsLeft = 60;
 		while (secondsLeft > 0) {
@@ -89,8 +109,13 @@ public class GameManager : MonoBehaviour {
 
 		fails++;
 
-		if (fails >= FAIL_LIMIT) {
+		if (fails == 1) {
+			StartGas();
+		} else if (fails == 2) {
+			GameObject.FindGameObjectsWithTag("DebrisSpawner")[0].GetComponent<DebrisSpawner>().SpawnDebris();
+		} else if (fails >= FAIL_LIMIT) {
 			Debug.Log("YOU LOSE");
+			yield return new WaitForSeconds(5);
 			SceneManager.LoadScene("GameOver");
 		} else {
 			GetComponent<InstructionManager>().NewInstructions("failed");
