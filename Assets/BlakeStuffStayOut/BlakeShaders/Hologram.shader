@@ -26,6 +26,14 @@
 
 		// Settings
 		[HideInInspector] _Fold("__fld", Float) = 1.0
+
+		// required for UI.Mask
+        [HideInInspector] _StencilComp ("Stencil Comparison", Float) = 8
+        [HideInInspector]_Stencil ("Stencil ID", Float) = 0
+        [HideInInspector]_StencilOp ("Stencil Operation", Float) = 0
+        [HideInInspector]_StencilWriteMask ("Stencil Write Mask", Float) = 255
+        [HideInInspector] _StencilReadMask ("Stencil Read Mask", Float) = 255
+        [HideInInspector] _ColorMask ("Color Mask", Float) = 15
 	}
 	SubShader
 	{
@@ -34,6 +42,17 @@
 		LOD 100
 		ColorMask RGB
         Cull Back
+
+        // required for UI.Mask
+         Stencil
+         {
+             Ref [_Stencil]
+             Comp [_StencilComp]
+             Pass [_StencilOp] 
+             ReadMask [_StencilReadMask]
+             WriteMask [_StencilWriteMask]
+         }
+         ColorMask [_ColorMask]
 
 		Pass
 		{
