@@ -29,7 +29,7 @@ public class InstructionManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		NewInstructions();
-		StartCoroutine("NewInstructionsRepeat");
+		// StartCoroutine("NewInstructionsRepeat");
 	}
 	
 	// Update is called once per frame
@@ -57,17 +57,17 @@ public class InstructionManager : MonoBehaviour {
 		}
 	}
 
-	private IEnumerator NewInstructionsRepeat() { // DELETE LATER
-		while (true) {
-			if (Random.Range(0, 1f) < 0.5f) {
-				GetComponent<GameManager>().UsedItem(verbs[GetComponent<InstructionManager>().instructions[0]]
-			+ adjectives[GetComponent<InstructionManager>().instructions[1]]
-			+ nouns[GetComponent<InstructionManager>().instructions[2]]);
-			} else {
-				GetComponent<GameManager>().UsedItem(verbs[GetComponent<InstructionManager>().instructions[0]]
-			+ adjectives[GetComponent<InstructionManager>().instructions[1]]);
-			}
-			yield return new WaitForSeconds(5);
-		}
-	}
+	// private IEnumerator NewInstructionsRepeat() { // DELETE LATER
+	// 	while (true) {
+	// 		if (Random.Range(0, 1f) < 0.5f) {
+	// 			GetComponent<GameManager>().UsedItem(verbs[GetComponent<InstructionManager>().instructions[0]]
+	// 		+ adjectives[GetComponent<InstructionManager>().instructions[1]]
+	// 		+ nouns[GetComponent<InstructionManager>().instructions[2]]);
+	// 		} else {
+	// 			GetComponent<GameManager>().UsedItem(verbs[GetComponent<InstructionManager>().instructions[0]]
+	// 		+ adjectives[GetComponent<InstructionManager>().instructions[1]]);
+	// 		}
+	// 		yield return new WaitForSeconds(70);
+	// 	}
+	// }
 }

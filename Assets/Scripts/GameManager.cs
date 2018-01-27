@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
+	public GameObject timer;
+
 	private const int TOTAL_TASKS = 10;
 	private const int FAIL_LIMIT = 3;
 	private int currentTask;
@@ -37,16 +40,6 @@ public class GameManager : MonoBehaviour {
 				GetComponent<InstructionManager>().NewInstructions("won");
 				StopCoroutine("CountDownTimer");
 			}
-		} else {
-			fails++;
-
-			if (fails >= FAIL_LIMIT) {
-				Debug.Log("YOU LOSE");
-				SceneManager.LoadScene("GameOver");
-			} else {
-				GetComponent<InstructionManager>().NewInstructions("failed");
-			}
-
 		}
 
 		Debug.Log(currentTask + " " + fails);
@@ -73,6 +66,16 @@ public class GameManager : MonoBehaviour {
 		while (secondsLeft > 0) {
 			yield return new WaitForSeconds(1);
 			secondsLeft--;
+			timer.GetComponent<Text>().text = secondsLeft.ToString();
+		}
+
+		fails++;
+
+		if (fails >= FAIL_LIMIT) {
+			Debug.Log("YOU LOSE");
+			SceneManager.LoadScene("GameOver");
+		} else {
+			GetComponent<InstructionManager>().NewInstructions("failed");
 		}
 	}
 }
