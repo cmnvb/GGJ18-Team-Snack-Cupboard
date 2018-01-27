@@ -9,17 +9,28 @@ public class GameManager : MonoBehaviour {
 
 	private const int TOTAL_TASKS = 10;
 	private const int FAIL_LIMIT = 3;
-	private int currentTask;
-	private int fails;
-	private int secondsLeft;
+	private int currentTask = 0;
+	private int fails = 0;
+    private int secondsLeft = 60;
 
-	private string[] verbs = new string[]{"slide", "pull", "rotate", "push"};
-	private string[] adjectives = new string[]{"red", "green", "yellow", "blue"};
-	private string[] nouns = new string[]{"lever", "button", "dial", "slider"};
+    private InstructionManager IMngr;
+    public static GameManager gameManager;
+
+    /// <summary>
+    /// Singleton pattern to store reference to game manager
+    /// </summary>
+    void Awake()
+    {
+        if (gameManager == null)
+        {
+            gameManager = this;
+        }
+        else { Destroy(gameObject); }
+    }
 
 	// Use this for initialization
 	void Start () {
-		
+        IMngr = GetComponent<InstructionManager>();
 	}
 	
 	// Update is called once per frame
@@ -27,20 +38,27 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
-	public void UsedItem(string itemUsed) {
-		currentTask++;
-		if (itemUsed.ToLower() == verbs[GetComponent<InstructionManager>().instructions[0]]
-			+ adjectives[GetComponent<InstructionManager>().instructions[1]]
-			+ nouns[GetComponent<InstructionManager>().instructions[2]]) {
+	public void UsedItem(Actions.Verbs _verb, Actions.Colour _colour, Actions.Interactable _interactable) {
+        Debug.Log("Item used: " + _verb.ToString() + ", " + _colour.ToString() + ", " + _interactable.ToString());
+		
+		if (    _verb == IMngr.verb     &&
+                _colour == IMngr.colour   &&
+                _interactable == IMngr.interactable) {
+            currentTask++;
+            Debug.Log("success");
 
 			if (currentTask >= 10) {
 				Debug.Log("GAME FINISHED");
 				SceneManager.LoadScene("WinScreen");
 			} else {
-				GetComponent<InstructionManager>().NewInstructions("won");
+                GetComponent<InstructionManager>().NewInstructions("won");
 				StopCoroutine("CountDownTimer");
 			}
 		}
+        else
+        {
+
+        }
 
 		Debug.Log(currentTask + " " + fails);
 	}
@@ -103,4 +121,13 @@ public class GameManager : MonoBehaviour {
 			GetComponent<InstructionManager>().NewInstructions("failed");
 		}
 	}
+}
+
+
+public class Actions
+{
+    public enum Verbs { PUSH, PULL, ROTATE, SLIDE};
+    public enum Colour { RED, BLUE, GREEN, YELLOW };
+    public enum Interactable { BUTTON, LEVER, SLIDER, DIAL };
+
 }

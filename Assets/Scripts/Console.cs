@@ -21,9 +21,9 @@ public class Console : MonoBehaviour {
 		
 	}
 
-	public void printInstruction(int[] instructions) {
-		verb.GetComponent<SpriteRenderer>().sprite = symbols[instructions[0]];
-		adjective.GetComponent<SpriteRenderer>().sprite = symbols[instructions[1]];
-		noun.GetComponent<SpriteRenderer>().sprite = symbols[instructions[2]];
+	public void printInstruction(Actions.Verbs _verb, Actions.Colour _colour, Actions.Interactable _interactable) {
+		verb.GetComponent<SpriteRenderer>().sprite = symbols[(int)_verb];
+		adjective.GetComponent<SpriteRenderer>().sprite = symbols[(int)_colour];
+		noun.GetComponent<SpriteRenderer>().sprite = symbols[(int)_interactable];
 	}
 }

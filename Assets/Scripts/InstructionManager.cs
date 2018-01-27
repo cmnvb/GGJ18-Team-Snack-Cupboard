@@ -18,18 +18,15 @@ public class InstructionManager : MonoBehaviour {
 	private const int ADJECTIVE_COUNT = 4;
 	private const int NOUN_COUNT = 4;
 
-	private string[] verbs = new string[]{"slide", "pull", "rotate", "push"}; // Delete
-	private string[] adjectives = new string[]{"red", "green", "yellow", "blue"};
-	private string[] nouns = new string[]{"lever", "button", "dial", "slider"}; // Later
+    public Actions.Verbs verb;
+    public Actions.Colour colour;
+    public Actions.Interactable interactable;
 
 	public GameObject speaker;
-
-	public int[] instructions = new int[3]; //verb, adjective, noun
 
 	// Use this for initialization
 	void Start () {
 		NewInstructions();
-		// StartCoroutine("NewInstructionsRepeat");
 	}
 	
 	// Update is called once per frame
@@ -39,35 +36,16 @@ public class InstructionManager : MonoBehaviour {
 
 	public void NewInstructions(string lastTaskOutcome = "won") {
 		CreateInstructions();
-		speaker.GetComponent<Speaker>().sayIntro(instructions, lastTaskOutcome);
+		speaker.GetComponent<Speaker>().sayIntro(lastTaskOutcome);
 	}
 
 	private void CreateInstructions() {
-		instructions[0] = Random.Range(0, VERB_COUNT);
-		instructions[1] = Random.Range(0, ADJECTIVE_COUNT);
+        verb = (Actions.Verbs)Random.Range(0,3);
+        colour = (Actions.Colour)Random.Range(0, 3);
+        interactable = (Actions.Interactable)Random.Range(0, 3);
 
-		if (instructions[0] == 0) {
-			instructions[2] = 3;
-		} else if (instructions[0] == 1) {
-			instructions[2] = 0;
-		} else if (instructions[0] == 2) {
-			instructions[2] = 2;
-		} else if (instructions[0] == 3) {
-			instructions[2] = Random.Range(0, 1);
-		}
-	}
-
-	// private IEnumerator NewInstructionsRepeat() { // DELETE LATER
-	// 	while (true) {
-	// 		if (Random.Range(0, 1f) < 0.5f) {
-	// 			GetComponent<GameManager>().UsedItem(verbs[GetComponent<InstructionManager>().instructions[0]]
-	// 		+ adjectives[GetComponent<InstructionManager>().instructions[1]]
-	// 		+ nouns[GetComponent<InstructionManager>().instructions[2]]);
-	// 		} else {
-	// 			GetComponent<GameManager>().UsedItem(verbs[GetComponent<InstructionManager>().instructions[0]]
-	// 		+ adjectives[GetComponent<InstructionManager>().instructions[1]]);
-	// 		}
-	// 		yield return new WaitForSeconds(70);
-	// 	}
-	// }
+        //verb = Actions.Verbs.PULL;
+        //interactable = Actions.Interactable.LEVER;
+        //colour = Actions.Colour.RED;
+    }
 }

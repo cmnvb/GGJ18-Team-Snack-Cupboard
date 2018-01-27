@@ -21,6 +21,9 @@ namespace VRTK
         [Tooltip("If this is checked then the spring will always be active even when grabbing the lever.")]
         public bool alwaysActive = false;
 
+        public bool overrideSpringAngle = false;
+        public float springTargetAngle = 0f;
+
         protected bool wasTowardZero = true;
         protected bool isGrabbed = false;
 
@@ -38,7 +41,7 @@ namespace VRTK
                 JointSpring leverSpring = leverHingeJoint.spring;
                 leverSpring.spring = springStrength;
                 leverSpring.damper = springDamper;
-                leverSpring.targetPosition = minAngle;
+                leverSpring.targetPosition = overrideSpringAngle ? springTargetAngle : minAngle;
                 leverHingeJoint.spring = leverSpring;
             }
             else

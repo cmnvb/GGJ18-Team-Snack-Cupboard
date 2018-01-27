@@ -11,43 +11,51 @@ public class Speaker : MonoBehaviour {
 	public AudioClip[] adjectives = new AudioClip[4];
 	public AudioClip[] nouns = new AudioClip[4];
 
+    InstructionManager IMngr;
+    GameManager GM;
 	private int[] instructions;
 	private AudioSource speaker;
 
-	// Use this for initialization
-	void Awake() {
+    // Use this for initialization
+    void Awake() {
 		speaker = GetComponent<AudioSource>();
-	}
+        IMngr = managerCollection.GetComponent<InstructionManager>();
+        GM = managerCollection.GetComponent<GameManager>();
+    }
+
+    void Start()
+    {
+
+    }
 	
 	// Update is called once per frame
 	void Update() {
 		
 	}
 
-	public void sayIntro(int[] instructions, string lastTaskOutcome) {
-		this.instructions = instructions;
+	public void sayIntro(string lastTaskOutcome) {
 		if (lastTaskOutcome != "failed") {
-			speaker.clip = intros[managerCollection.GetComponent<GameManager>().GetCurrentTask()];
+			speaker.clip = intros[GM.GetCurrentTask()];
 		} else {
-			speaker.clip = failIntros[managerCollection.GetComponent<GameManager>().GetFails()];
+			speaker.clip = failIntros[GM.GetFails()];
 		}
 		speaker.Play();
 		StartCoroutine("AfterIntro");
 	}
 
 	private void UpdateConsole() {
-		console.GetComponent<Console>().printInstruction(instructions);
+		console.GetComponent<Console>().printInstruction(IMngr.verb, IMngr.colour, IMngr.interactable);
 	}
 
 	private IEnumerator AfterIntro() {
 		yield return new WaitForSeconds(speaker.clip.length);
-		speaker.clip = verbs[instructions[0]];
+		speaker.clip = verbs[(int)IMngr.verb];
 		speaker.Play();
-		yield return new WaitForSeconds(verbs[instructions[0]].length);
-		speaker.clip = adjectives[instructions[1]];
+		yield return new WaitForSeconds(verbs[(int)IMngr.verb].length);
+		speaker.clip = adjectives[(int)IMngr.colour];
 		speaker.Play();
-		yield return new WaitForSeconds(adjectives[instructions[1]].length);
-		speaker.clip = nouns[instructions[2]];
+		yield return new WaitForSeconds(adjectives[(int)IMngr.colour].length);
+		speaker.clip = nouns[(int)IMngr.interactable];
 		speaker.Play();
 		managerCollection.GetComponent<GameManager>().StartCountDown();
 		UpdateConsole();
